@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Midterm4711Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="200" />
+          <Property Name="owner" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="city" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="country" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="lastName" Type="nchar" MaxLength="400" Nullable="false" />
+          <Property Name="signingDate" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="rank" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="totalGoals" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="clubId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Player_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Player1" Type="Self.Player" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Player1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Midterm4711ModelStoreContainer">
+          <EntitySet Name="Club" EntityType="Self.Club" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Player_Player" Association="Self.FK_Player_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Player1" EntitySet="Player" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Midterm4711Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="owner" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="400" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="signingDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="rank" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="totalGoals" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="clubId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player1" Relationship="Self.FK_Player_Player" FromRole="Player" ToRole="Player1" />
+          <NavigationProperty Name="Player2" Relationship="Self.FK_Player_Player" FromRole="Player1" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_Player_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Player1" Type="Self.Player" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Player1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Midterm4711Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clubs" EntityType="Self.Club" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <AssociationSet Name="FK_Player_Player" Association="Self.FK_Player_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Player1" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Midterm4711ModelStoreContainer" CdmEntityContainer="Midterm4711Entities">
+          <EntitySetMapping Name="Clubs">
+            <EntityTypeMapping TypeName="Midterm4711Model.Club">
+              <MappingFragment StoreEntitySet="Club">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="owner" ColumnName="owner" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="Midterm4711Model.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="signingDate" ColumnName="signingDate" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="totalGoals" ColumnName="totalGoals" />
+                <ScalarProperty Name="clubId" ColumnName="clubId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
